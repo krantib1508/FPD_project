@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Account Detection</title>
+</head>
+<body>
+    <h1>Fake Account Detection</h1>
+    <form id="accountForm">
+        <input type="text" name="profilepic" placeholder="Profile Pic (0 or 1)" required="required" /><br>
+        <input type="text" name="nums/length" placeholder="Nums/Length Username" required="required" /><br>
+        <input type="text" name="fullnamewords" placeholder="Fullname Words" required="required" /><br>
+        <input type="text" name="nums/lengthfullname" placeholder="Nums/Length Fullname" required="required" /><br>
+        <input type="text" name="nameusername" placeholder="Name==Username" required="required" /><br>
+        <input type="text" name="descriptionlength" placeholder="Description Length" required="required" /><br>
+        <input type="text" name="externalurl" placeholder="External URL" required="required" /><br>
+        <input type="text" name="private" placeholder="Private (0 or 1)" required="required" /><br>
+        <input type="text" name="posts" placeholder="Posts" required="required" /><br>
+        <input type="text" name="followers" placeholder="Followers" required="required" /><br>
+        <input type="text" name="follows" placeholder="Follows" required="required" /><br><br>
+        <button type="submit">Predict</button>
+    </form>
+    <div id="prediction"></div>
+
+    <script>
+        document.getElementById("accountForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(prediction => {
+                document.getElementById("prediction").innerHTML = "<h2>Prediction: " + prediction + "</h2>";
+            });
+        });
+    </script>
+</body>
+</html>
